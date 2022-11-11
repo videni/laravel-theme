@@ -7,12 +7,10 @@ class Themes
     protected $themesPath;
     protected $activeTheme = null;
     protected $themes = [];
-    protected $laravelViewsPath;
     protected $cachePath;
 
     public function __construct()
     {
-        $this->laravelViewsPath = config('view.paths');
         $this->themesPath = config('themes.themes_path', null) ?: config('view.paths')[0];
         $this->cachePath = base_path('bootstrap/cache/themes.php');
     }
@@ -73,7 +71,7 @@ class Themes
         $paths = $theme->getViewPaths();
 
         // fall-back to default paths (set in views.php config file)
-        foreach ($this->laravelViewsPath as $path) {
+        foreach (config('view.paths') as $path) {
             if (!in_array($path, $paths)) {
                 $paths[] = $path;
             }
